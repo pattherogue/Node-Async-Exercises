@@ -1,0 +1,15 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+#number-facts {
+    margin-top: 20px;
+}
+
+#number-facts p {
+    margin-bottom: 10px;
+}
