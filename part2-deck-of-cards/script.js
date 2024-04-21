@@ -22,15 +22,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     async function createDeck() {
-        const response = await fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1');
-        const data = await response.json();
-        return data.deck_id;
+        try {
+            const response = await fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1');
+            const data = await response.json();
+            return data.deck_id;
+        } catch (error) {
+            throw error;
+        }
     }
 
     async function drawCard(deckId) {
-        const response = await fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`);
-        const data = await response.json();
-        return data.cards[0];
+        try {
+            const response = await fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`);
+            const data = await response.json();
+            return data.cards[0];
+        } catch (error) {
+            throw error;
+        }
     }
 
     function displayCard(cardData) {

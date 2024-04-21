@@ -27,18 +27,26 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function getNumberFact(number) {
-    const response = await fetch(`http://numbersapi.com/${number}?json`);
-    const data = await response.json();
-    return data.text;
+    try {
+        const response = await fetch(`http://numbersapi.com/${number}?json`);
+        const data = await response.json();
+        return data.text;
+    } catch (error) {
+        throw error;
+    }
 }
 
 async function getUniqueNumberFacts(number) {
     const uniqueFacts = new Set();
-    while (uniqueFacts.size < 4) {
-        const fact = await getNumberFact(number);
-        uniqueFacts.add(fact);
+    try {
+        while (uniqueFacts.size < 4) {
+            const fact = await getNumberFact(number);
+            uniqueFacts.add(fact);
+        }
+        return Array.from(uniqueFacts);
+    } catch (error) {
+        throw error;
     }
-    return Array.from(uniqueFacts);
 }
 
 function displayFact(fact) {

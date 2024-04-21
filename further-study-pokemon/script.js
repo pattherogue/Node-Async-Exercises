@@ -12,35 +12,47 @@ generateBtn.addEventListener('click', async () => {
 });
 
 async function getRandomPokemonIds(count) {
-    const response = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=1000');
-    const data = await response.json();
-    const pokemonIds = [];
-    for (let i = 0; i < count; i++) {
-        const randomIndex = Math.floor(Math.random() * data.results.length);
-        const pokemonId = data.results[randomIndex].url.split('/').slice(-2, -1)[0];
-        pokemonIds.push(pokemonId);
+    try {
+        const response = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=1000');
+        const data = await response.json();
+        const pokemonIds = [];
+        for (let i = 0; i < count; i++) {
+            const randomIndex = Math.floor(Math.random() * data.results.length);
+            const pokemonId = data.results[randomIndex].url.split('/').slice(-2, -1)[0];
+            pokemonIds.push(pokemonId);
+        }
+        return pokemonIds;
+    } catch (error) {
+        throw error;
     }
-    return pokemonIds;
 }
 
 async function getPokemonData(id) {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-    const data = await response.json();
-    return {
-        name: data.name,
-        sprite: data.sprites.front_default,
-        speciesUrl: data.species.url
-    };
+    try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+        const data = await response.json();
+        return {
+            name: data.name,
+            sprite: data.sprites.front_default,
+            speciesUrl: data.species.url
+        };
+    } catch (error) {
+        throw error;
+    }
 }
 
 async function getPokemonDescription(speciesUrl) {
-    const response = await fetch(speciesUrl);
-    const data = await response.json();
-    const flavorTextEntries = data.flavor_text_entries.filter(entry => entry.language.name === 'en');
-    if (flavorTextEntries.length > 0) {
-        return flavorTextEntries[0].flavor_text;
-    } else {
-        return 'Description not available.';
+    try {
+        const response = await fetch(speciesUrl);
+        const data = await response.json();
+        const flavorTextEntries = data.flavor_text_entries.filter(entry => entry.language.name === 'en');
+        if (flavorTextEntries.length > 0) {
+            return flavorTextEntries[0].flavor_text;
+        } else {
+            return 'Description not available.';
+        }
+    } catch (error) {
+        throw error;
     }
 }
 
